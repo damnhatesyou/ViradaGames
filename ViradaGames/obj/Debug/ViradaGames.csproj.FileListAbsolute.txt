@@ -1,0 +1,10 @@
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.csprojAssemblyReference.cache
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.Properties.Resources.resources
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.csproj.GenerateResource.cache
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\bin\Debug\ViradaGames.exe.config
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\bin\Debug\ViradaGames.exe
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\bin\Debug\ViradaGames.pdb
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.ViradaGames.resources
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.csproj.CoreCompileInputs.cache
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.exe
+C:\Users\Daimyo-Laptop\Desktop\New folder\ViradaGames\obj\Debug\ViradaGames.pdb
