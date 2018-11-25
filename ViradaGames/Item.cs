@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ViradaGames
 {
+    [Serializable]
     class Item
     {
-        private int itemID;
-        private string description;
-        private int stockQuantity;
-        private double retailPrice;
+        protected string itemID;
+        protected string description;
+        protected int stockQuantity;
+        protected double retailPrice;
 
-        public int ItemID
+        public string ItemID
         {
             get { return itemID; }
             set { itemID = value; }

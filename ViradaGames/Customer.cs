@@ -10,27 +10,39 @@ using System.Windows.Forms;
 
 namespace ViradaGames
 {
+    [Serializable]
     class Customer
     {
-        private int custID;
-        private string surname;
+        private string customerID;
+        private string familyName;
         private string firstname;
         private string emailAddress;
 
         public Customer()
         {
-            CustId = 0000;
+            CustomerId = "C000";
+            FamilyName = "Unknown";
+            Firstname = "Unknown";
+            EmailAddress = "Unknown";
         }
 
-        public int CustId
+        public Customer(string custId, string familyName, string firstname, string emailAddress)
         {
-            get => custID;
-            set => custID = value;
+            CustomerId = custId;
+            FamilyName = familyName;
+            Firstname = firstname;
+            EmailAddress = emailAddress;
         }
-        public string Surname
+
+        public string CustomerId
         {
-            get => surname;
-            set => surname = value;
+            get => customerID;
+            set => customerID = value;
+        }
+        public string FamilyName
+        {
+            get => familyName;
+            set => familyName = value;
         }
         public string Firstname
         {
@@ -42,26 +54,5 @@ namespace ViradaGames
             get => emailAddress;
             set => emailAddress = value;
         }
-
-        private void WriteListToBinaryFile()
-        {
-            try
-            {
-                using (Stream writeStream = File.Open("customers.bin", FileMode.Create))
-                {
-                    BinaryFormatter binaryData = new BinaryFormatter();
-                    // Create the binary formatter and serialize
-                    binaryData.Serialize(writeStream, custID);
-                    binaryData.Serialize(writeStream, surname);
-                    binaryData.Serialize(writeStream, firstname);
-                    binaryData.Serialize(writeStream, emailAddress);
-                }
-            }
-            catch (IOException oe)
-            {
-                MessageBox.Show("Could not write to file !\n" + oe.Message);
-            }
-        }
-
     }
 }

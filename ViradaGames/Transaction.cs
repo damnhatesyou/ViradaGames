@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViradaGames
 {
+    [Serializable]
     class Transaction
     {
         private int custID;

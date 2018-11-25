@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,12 +14,13 @@ namespace ViradaGames
 {
     public partial class ViradaGames : Form
     {
-        public ViradaGames()
-        {
-            InitializeComponent();
-        }
+        #region Lists
+        List<Item> ItemsList = new List<Item>();
+        List<Customer> CustomerList = new List<Customer>();
+        List<Transaction> TransactionList = new List<Transaction>();
+        #endregion
 
-
+        #region AddButtons
         private void productAddButton_Click(object sender, EventArgs e)
         {
             // Does it Have Item Data
@@ -26,29 +29,43 @@ namespace ViradaGames
                 // Is it a Game
                 if (HasGame() && !(HasPlatforms() || HasAccessory()))
                 {
-                    productsListBox.Items.Add(productIDItemInfoTextBox.Text + descriptionItemInfoTextBox.Text);
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
+                    ItemsList.Add(new Game(productIDItemInfoTextBox.Text,descriptionItemInfoTextBox.Text,
+                        int.Parse(stockQuantityItemInfoTextBox.Text),double.Parse(retailPriceItemInfoTextBox.Text),
+                        publisherGamesTextBox.Text,mediaTypeGamesTextBox.Text));
+                    WriteItemList();
                 }
 
                 // Is it a Platform
                 if (HasPlatforms() && !(HasGame() || HasAccessory()))
                 {
-                    productsListBox.Items.Add(productIDItemInfoTextBox.Text + descriptionItemInfoTextBox.Text);
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
+                    ItemsList.Add(new Platform(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
+                        int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
+                        modelNumberPlatformsTextBox.Text));
+                    WriteItemList();
                 }
 
                 // Is it an Accessory
                 if (HasAccessory() && !(HasGame() || HasPlatforms()))
                 {
-                    productsListBox.Items.Add(productIDItemInfoTextBox.Text + descriptionItemInfoTextBox.Text);
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
+                    ItemsList.Add(new Accessory(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
+                        int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
+                        platformTypeAccessoriesTextBox.Text));
+                    WriteItemList();
                 }
                 // Otherwise
                 else
                 {
-                    Console.WriteLine("Please Enter a Games/Platform/Accessory");
+                    MessageBox.Show("Please Enter a Games/Platform/Accessory");
                 }
+                ClearItemTextBoxes();
             }
             else
             {
-                Console.WriteLine("Please The Some Data");
+
+                MessageBox.Show("Please The Some Data");
             }
         }
 
@@ -56,16 +73,28 @@ namespace ViradaGames
         {
             if (HasCustomer())
             {
-                customerListBox.Items.Add(customerCustomerIDTextBox.Text + ": " + familyNameCustomerTextBox.Text + ", " + 
+                customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text + ", " + 
                                           firstNameCustomerTextBox.Text);
+                CustomerList.Add(new Customer(CustomerIDCustomerTextBox.Text,familyNameCustomerTextBox.Text,
+                    firstNameCustomerTextBox.Text,emailCustomerTextBox.Text));
+                WriteCustomerList();
             }
+            ClearCustomerTextBoxes();
         }
 
         private void transactionAddButton_Click(object sender, EventArgs e)
         {
-
+            if (HasTransaction())
+            {
+                transactionListBox.Items.Add(string.Join(" ", customerIDTransactionTextBox.Text, productIDTransactionTextBox.Text,
+                    quantityTransactionTextBox.Text,
+                    retailPriceTransactionTextBox.Text,
+                    dateTransactionTextBox.Text));
+            }
         }
+        #endregion
 
+        #region HasChecks
         /// <summary>
         /// Test For a Item
         /// </summary>
@@ -112,7 +141,7 @@ namespace ViradaGames
         /// <returns>bool</returns>
         private bool HasCustomer()
         {
-            return !string.IsNullOrEmpty(customerCustomerIDTextBox.Text) &&
+            return !string.IsNullOrEmpty(CustomerIDCustomerTextBox.Text) &&
                    !string.IsNullOrEmpty(familyNameCustomerTextBox.Text) &&
                    !string.IsNullOrEmpty(firstNameCustomerTextBox.Text) &&
                    !string.IsNullOrEmpty(emailCustomerTextBox.Text);
@@ -128,12 +157,121 @@ namespace ViradaGames
                    !string.IsNullOrEmpty(productIDTransactionTextBox.Text) &&
                    !string.IsNullOrEmpty(quantityTransactionTextBox.Text) &&
                    !string.IsNullOrEmpty(retailPriceTransactionTextBox.Text) &&
-                   !string.IsNullOrEmpty(dateTransactionTextBoxTransactionTextBox.Text);
+                   !string.IsNullOrEmpty(dateTransactionTextBox.Text);
+        }
+        #endregion
+
+        #region Reading and Writing from files
+        /// <summary>
+        /// Write Item List to File "items.dat"
+        /// </summary>
+        public void WriteItemList()
+        {
+            try
+            {
+                using (Stream writeStream = File.Open("items.dat", FileMode.Create))
+                {
+                    BinaryFormatter binaryData = new BinaryFormatter();
+                    // Create the binary formatter and serialize
+                    binaryData.Serialize(writeStream, ItemsList);
+                }
+            }
+            catch (IOException oe)
+            {
+                MessageBox.Show("Could not write to file !\n" + oe.Message);
+            }
         }
 
+        /// <summary>
+        /// Read Items from "items.dat"
+        /// </summary>
+        public void ReadItemList()
+        {
+            using (Stream readStream = File.Open("items.dat", FileMode.Open))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                ItemsList = (List<Item>)formatter.Deserialize(readStream);
+            }
+        }
+
+        /// <summary>
+        /// Write Customers List to File "customer.dat"
+        /// </summary>
+        public void WriteCustomerList()
+        {
+            try
+            {
+                using (Stream writeStream = File.Open("customer.dat", FileMode.Create))
+                {
+                    BinaryFormatter binaryData = new BinaryFormatter();
+                    // Create the binary formatter and serialize
+                    binaryData.Serialize(writeStream, CustomerList);
+                }
+            }
+            catch (IOException oe)
+            {
+                MessageBox.Show("Could not write to file !\n" + oe.Message);
+            }
+        }
+
+        /// <summary>
+        /// Read Customers from "customer.dat"
+        /// </summary>
+        public void ReadCustomerList()
+        {
+            using (Stream readStream = File.Open("customer.dat", FileMode.Open))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                CustomerList = (List<Customer>)formatter.Deserialize(readStream);
+            }
+        }
+
+        /// <summary>
+        /// Write Transactions List to File "transaction.dat"
+        /// </summary>
+        public void WriteTransactionList()
+        {
+            try
+            {
+                using (Stream writeStream = File.Open("transaction.dat", FileMode.Create))
+                {
+                    BinaryFormatter binaryData = new BinaryFormatter();
+                    // Create the binary formatter and serialize
+                    binaryData.Serialize(writeStream, TransactionList);
+                }
+            }
+            catch (IOException oe)
+            {
+                MessageBox.Show("Could not write to file !\n" + oe.Message);
+            }
+        }
+
+        /// <summary>
+        /// Read Transactions from "transaction.dat"
+        /// </summary>
+        public void ReadTransactionList()
+        {
+            using (Stream readStream = File.Open("transaction.dat", FileMode.Open))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                TransactionList = (List<Transaction>)formatter.Deserialize(readStream);
+            }
+        }
+        #endregion
+
+        #region Listbox Control
         private void customerListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearCustomerTextBoxes();
+            CustomerIDCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
+            familyNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].FamilyName;
+            firstNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].Firstname;
+            emailCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].EmailAddress;
 
+            customerIDTransactionTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
         }
 
         private void transactionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -143,7 +281,87 @@ namespace ViradaGames
 
         private void productsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearItemTextBoxes();
+            productIDItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
+            descriptionItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].Description;
+            stockQuantityItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].StockQuantity.ToString();
+            retailPriceItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
+            if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Game))
+            {
+                Game game = (Game)ItemsList[productsListBox.SelectedIndex];
+                publisherGamesTextBox.Text = game.Publisher;
+                mediaTypeGamesTextBox.Text = game.MediaType;
+            }
 
+            if(ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Platform))
+            {
+                Platform platform = (Platform)ItemsList[productsListBox.SelectedIndex];
+                modelNumberPlatformsTextBox.Text = platform.ModelNumber;
+            }
+
+            if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Accessory))
+            {
+                Accessory accessory = (Accessory)ItemsList[productsListBox.SelectedIndex];
+                platformTypeAccessoriesTextBox.Text = accessory.PlatformType;
+            }
+
+            productIDTransactionTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
+            retailPriceTransactionTextBox.Text = ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
         }
+        #endregion
+
+        #region Textbox Control
+        /// <summary>
+        /// Clears The Items Textboxes
+        /// </summary>
+        public void ClearItemTextBoxes()
+        {
+            productIDItemInfoTextBox.Text = "";
+            descriptionItemInfoTextBox.Text = "";
+            stockQuantityItemInfoTextBox.Text = "";
+            retailPriceItemInfoTextBox.Text = "";
+            publisherGamesTextBox.Text = "";
+            mediaTypeGamesTextBox.Text = "";
+            modelNumberPlatformsTextBox.Text = "";
+            platformTypeAccessoriesTextBox.Text = "";
+        }
+        public void ClearCustomerTextBoxes()
+        {
+            CustomerIDCustomerTextBox.Text = "";
+            familyNameCustomerTextBox.Text = "";
+            firstNameCustomerTextBox.Text = "";
+            emailCustomerTextBox.Text = "";
+        }
+        public void ClearTransactionTextBoxes()
+        {
+            customerIDTransactionTextBox.Text = "";
+            productIDTransactionTextBox.Text = "";
+            quantityTransactionTextBox.Text = "";
+            retailPriceTransactionTextBox.Text = "";
+            dateTransactionTextBox.Text = "";
+        }
+        #endregion
+
+        #region Misc 
+        private void ViradaGames_Load(object sender, EventArgs e)
+        {
+            ReadItemList();
+            ReadCustomerList();
+            foreach (Item item in ItemsList)
+            {
+                productsListBox.Items.Add(string.Join(" ", item.ItemID, item.Description));
+            }
+
+            foreach (Customer customer in CustomerList)
+            {
+                customerListBox.Items.Add(string.Join(" ", customer.CustomerId, customer.FamilyName + " " + customer.Firstname));
+            }
+        }
+
+        public ViradaGames()
+        {
+            InitializeComponent();
+        }
+        #endregion
     }
 }
