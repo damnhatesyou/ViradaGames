@@ -9,19 +9,28 @@ namespace ViradaGames
     [Serializable]
     class Transaction
     {
-        private int custID;
-        private int itemID;
+        private string custID;
+        private string itemID;
         private int quantity;
         private double retailPrice;
         private DateTime date;
 
-        public int CustId
+        public Transaction(string custId, string itemId, int quantity, double retailPrice, DateTime date)
+        {
+            CustId = custId;
+            ItemId = itemId;
+            Quantity = quantity;
+            RetailPrice = retailPrice;
+            Date = date;
+        }
+
+        public string CustId
         {
             get => custID;
             set => custID = value;
         }
 
-        public int ItemId
+        public string ItemId
         {
             get => itemID;
             set => itemID = value;

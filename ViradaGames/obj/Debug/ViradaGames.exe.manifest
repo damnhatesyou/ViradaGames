@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ViradaGames.exe" size="29712">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ViradaGames.exe" size="31760">
       <assemblyIdentity name="ViradaGames" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rVVmTads9K8X1+dTixDOH6S4MobZX8LPuC2d4vHFX6E=</dsig:DigestValue>
+        <dsig:DigestValue>u6HIvNdmTAf5gddxqCaMyChIPpTukCPZYzUVaswDfhI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

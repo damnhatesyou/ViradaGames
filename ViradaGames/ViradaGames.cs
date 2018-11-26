@@ -20,6 +20,8 @@ namespace ViradaGames
         List<Transaction> TransactionList = new List<Transaction>();
         #endregion
 
+        DateTime currentDate = new DateTime();
+
         #region AddButtons
         private void productAddButton_Click(object sender, EventArgs e)
         {
@@ -33,7 +35,7 @@ namespace ViradaGames
                     ItemsList.Add(new Game(productIDItemInfoTextBox.Text,descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text),double.Parse(retailPriceItemInfoTextBox.Text),
                         publisherGamesTextBox.Text,mediaTypeGamesTextBox.Text));
-                    WriteItemList();
+                    return;
                 }
 
                 // Is it a Platform
@@ -43,7 +45,7 @@ namespace ViradaGames
                     ItemsList.Add(new Platform(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
                         modelNumberPlatformsTextBox.Text));
-                    WriteItemList();
+                    return;
                 }
 
                 // Is it an Accessory
@@ -53,7 +55,7 @@ namespace ViradaGames
                     ItemsList.Add(new Accessory(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
                         platformTypeAccessoriesTextBox.Text));
-                    WriteItemList();
+                    return;
                 }
                 // Otherwise
                 else
@@ -64,7 +66,6 @@ namespace ViradaGames
             }
             else
             {
-
                 MessageBox.Show("Please The Some Data");
             }
         }
@@ -73,12 +74,17 @@ namespace ViradaGames
         {
             if (HasCustomer())
             {
-                customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text + ", " + 
+                customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text + ", " +
                                           firstNameCustomerTextBox.Text);
-                CustomerList.Add(new Customer(CustomerIDCustomerTextBox.Text,familyNameCustomerTextBox.Text,
-                    firstNameCustomerTextBox.Text,emailCustomerTextBox.Text));
-                WriteCustomerList();
+                CustomerList.Add(new Customer(CustomerIDCustomerTextBox.Text, familyNameCustomerTextBox.Text,
+                    firstNameCustomerTextBox.Text, emailCustomerTextBox.Text));
             }
+            else
+            {
+                CustomerList.Add(new Customer());
+                customerListBox.Items.Add("C001" + ": " + "Unknown" + ", " + "Unknown");
+            }
+
             ClearCustomerTextBoxes();
         }
 
@@ -87,9 +93,13 @@ namespace ViradaGames
             if (HasTransaction())
             {
                 transactionListBox.Items.Add(string.Join(" ", customerIDTransactionTextBox.Text, productIDTransactionTextBox.Text,
-                    quantityTransactionTextBox.Text,
-                    retailPriceTransactionTextBox.Text,
-                    dateTransactionTextBox.Text));
+                    quantityTransactionTextBox.Text, retailPriceTransactionTextBox.Text, dateTransactionTextBox.Text));
+                TransactionList.Add(new Transaction(customerIDTransactionTextBox.Text,productIDTransactionTextBox.Text,
+                    int.Parse(quantityTransactionTextBox.Text),double.Parse(retailPriceTransactionTextBox.Text),DateTime.Parse(dateTransactionTextBox.Text)));
+            }
+            else
+            {
+                MessageBox.Show("Please Select a Customer and an Item then enter a Quantity");
             }
         }
         #endregion
@@ -276,7 +286,35 @@ namespace ViradaGames
 
         private void transactionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearTransactionTextBoxes();
+            customerIDTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].CustId;
+            productsListBox.Text = TransactionList[transactionListBox.SelectedIndex].ItemId;
+            quantityTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].Quantity.ToString();
+            retailPriceTransactionTextBox.Text =
+                TransactionList[transactionListBox.SelectedIndex].RetailPrice.ToString("0.##");
+            dateTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].Date.ToShortDateString();
 
+            int itemPos = 0;
+            int custPos = 0;
+            foreach (Item item in ItemsList)
+            {
+                if (TransactionList[transactionListBox.SelectedIndex].ItemId == item.ItemID)
+                {
+                    productsListBox.SelectedIndex = itemPos; 
+                }
+
+                itemPos++;
+            }
+
+            foreach (Customer customer in CustomerList)
+            {
+                if (TransactionList[transactionListBox.SelectedIndex].CustId == customer.CustomerId)
+                {
+                    customerListBox.SelectedIndex = custPos;
+                }
+
+                custPos++;
+            }
         }
 
         private void productsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -338,15 +376,54 @@ namespace ViradaGames
             productIDTransactionTextBox.Text = "";
             quantityTransactionTextBox.Text = "";
             retailPriceTransactionTextBox.Text = "";
-            dateTransactionTextBox.Text = "";
+            dateTransactionTextBox.Text = currentDate.ToShortDateString();
         }
+
+        /// <summary>
+        /// Double clicks to clear Products Textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void productIDItemInfoTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            ClearItemTextBoxes();
+        }
+
+        /// <summary>
+        /// Double clicks to clear Customer Textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomerIDCustomerTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            ClearCustomerTextBoxes();
+        }
+
+        /// <summary>
+        /// Double clicks to clear Transaction Textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void customerIDTransactionTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            ClearTransactionTextBoxes();
+        }
+
         #endregion
 
         #region Misc 
+
+        /// <summary>
+        /// Read Binary files and populate Listboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViradaGames_Load(object sender, EventArgs e)
         {
             ReadItemList();
             ReadCustomerList();
+            ReadTransactionList();
+
             foreach (Item item in ItemsList)
             {
                 productsListBox.Items.Add(string.Join(" ", item.ItemID, item.Description));
@@ -356,12 +433,39 @@ namespace ViradaGames
             {
                 customerListBox.Items.Add(string.Join(" ", customer.CustomerId, customer.FamilyName + " " + customer.Firstname));
             }
+
+            foreach (Transaction transaction in TransactionList)
+            {
+                transactionListBox.Items.Add(string.Join(" ", transaction.CustId.ToString(), transaction.Quantity.ToString(),
+                    transaction.RetailPrice.ToString(), transaction.Date.ToShortDateString()));
+            }
+
+
+        }
+
+        /// <summary>
+        /// Write to Files on closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ViradaGames_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            WriteCustomerList();
+            WriteItemList();
+            WriteTransactionList();
         }
 
         public ViradaGames()
         {
             InitializeComponent();
         }
+        private void dateTransactionTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            // Sets the current Date
+            currentDate = DateTime.Now;
+            dateTransactionTextBox.Text = currentDate.Date.ToShortDateString();
+        }
         #endregion
+
     }
 }
