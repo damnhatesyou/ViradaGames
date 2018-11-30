@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,14 +16,17 @@ namespace ViradaGames
     public partial class ViradaGames : Form
     {
         #region Lists
+
         List<Item> ItemsList = new List<Item>();
         List<Customer> CustomerList = new List<Customer>();
         List<Transaction> TransactionList = new List<Transaction>();
+
         #endregion
 
         DateTime currentDate = new DateTime();
 
         #region AddButtons
+
         private void productAddButton_Click(object sender, EventArgs e)
         {
             // Does it Have Item Data
@@ -31,17 +35,19 @@ namespace ViradaGames
                 // Is it a Game
                 if (HasGame() && !(HasPlatforms() || HasAccessory()))
                 {
-                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
-                    ItemsList.Add(new Game(productIDItemInfoTextBox.Text,descriptionItemInfoTextBox.Text,
-                        int.Parse(stockQuantityItemInfoTextBox.Text),double.Parse(retailPriceItemInfoTextBox.Text),
-                        publisherGamesTextBox.Text,mediaTypeGamesTextBox.Text));
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
+                        descriptionItemInfoTextBox.Text));
+                    ItemsList.Add(new Game(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
+                        int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
+                        publisherGamesTextBox.Text, mediaTypeGamesTextBox.Text));
                     return;
                 }
 
                 // Is it a Platform
                 if (HasPlatforms() && !(HasGame() || HasAccessory()))
                 {
-                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
+                        descriptionItemInfoTextBox.Text));
                     ItemsList.Add(new Platform(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
                         modelNumberPlatformsTextBox.Text));
@@ -51,7 +57,8 @@ namespace ViradaGames
                 // Is it an Accessory
                 if (HasAccessory() && !(HasGame() || HasPlatforms()))
                 {
-                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text));
+                    productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
+                        descriptionItemInfoTextBox.Text));
                     ItemsList.Add(new Accessory(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
                         platformTypeAccessoriesTextBox.Text));
@@ -62,6 +69,7 @@ namespace ViradaGames
                 {
                     MessageBox.Show("Please Enter a Games/Platform/Accessory");
                 }
+
                 ClearItemTextBoxes();
             }
             else
@@ -74,7 +82,8 @@ namespace ViradaGames
         {
             if (HasCustomer())
             {
-                customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text + ", " +
+                customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text +
+                                          ", " +
                                           firstNameCustomerTextBox.Text);
                 CustomerList.Add(new Customer(CustomerIDCustomerTextBox.Text, familyNameCustomerTextBox.Text,
                     firstNameCustomerTextBox.Text, emailCustomerTextBox.Text));
@@ -92,19 +101,23 @@ namespace ViradaGames
         {
             if (HasTransaction())
             {
-                transactionListBox.Items.Add(string.Join(" ", customerIDTransactionTextBox.Text, productIDTransactionTextBox.Text,
+                transactionListBox.Items.Add(string.Join(" ", customerIDTransactionTextBox.Text,
+                    productIDTransactionTextBox.Text,
                     quantityTransactionTextBox.Text, retailPriceTransactionTextBox.Text, dateTransactionTextBox.Text));
-                TransactionList.Add(new Transaction(customerIDTransactionTextBox.Text,productIDTransactionTextBox.Text,
-                    int.Parse(quantityTransactionTextBox.Text),double.Parse(retailPriceTransactionTextBox.Text),DateTime.Parse(dateTransactionTextBox.Text)));
+                TransactionList.Add(new Transaction(customerIDTransactionTextBox.Text, productIDTransactionTextBox.Text,
+                    int.Parse(quantityTransactionTextBox.Text), double.Parse(retailPriceTransactionTextBox.Text),
+                    DateTime.Parse(dateTransactionTextBox.Text)));
             }
             else
             {
                 MessageBox.Show("Please Select a Customer and an Item then enter a Quantity");
             }
         }
+
         #endregion
 
         #region HasChecks
+
         /// <summary>
         /// Test For a Item
         /// </summary>
@@ -169,9 +182,11 @@ namespace ViradaGames
                    !string.IsNullOrEmpty(retailPriceTransactionTextBox.Text) &&
                    !string.IsNullOrEmpty(dateTransactionTextBox.Text);
         }
+
         #endregion
 
         #region Reading and Writing from files
+
         /// <summary>
         /// Write Item List to File "items.dat"
         /// </summary>
@@ -201,7 +216,7 @@ namespace ViradaGames
             {
                 BinaryFormatter formatter = new BinaryFormatter();
 
-                ItemsList = (List<Item>)formatter.Deserialize(readStream);
+                ItemsList = (List<Item>) formatter.Deserialize(readStream);
             }
         }
 
@@ -234,7 +249,7 @@ namespace ViradaGames
             {
                 BinaryFormatter formatter = new BinaryFormatter();
 
-                CustomerList = (List<Customer>)formatter.Deserialize(readStream);
+                CustomerList = (List<Customer>) formatter.Deserialize(readStream);
             }
         }
 
@@ -267,88 +282,105 @@ namespace ViradaGames
             {
                 BinaryFormatter formatter = new BinaryFormatter();
 
-                TransactionList = (List<Transaction>)formatter.Deserialize(readStream);
+                TransactionList = (List<Transaction>) formatter.Deserialize(readStream);
             }
         }
+
         #endregion
 
         #region Listbox Control
+
         private void customerListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClearCustomerTextBoxes();
-            CustomerIDCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
-            familyNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].FamilyName;
-            firstNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].Firstname;
-            emailCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].EmailAddress;
+            if (customerListBox.SelectedIndex >= 0)
+            {
+                ClearCustomerTextBoxes();
+                CustomerIDCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
+                familyNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].FamilyName;
+                firstNameCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].Firstname;
+                emailCustomerTextBox.Text = CustomerList[customerListBox.SelectedIndex].EmailAddress;
 
-            customerIDTransactionTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
+                customerIDTransactionTextBox.Text = CustomerList[customerListBox.SelectedIndex].CustomerId;
+            }
+
         }
 
         private void transactionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClearTransactionTextBoxes();
-            customerIDTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].CustId;
-            productsListBox.Text = TransactionList[transactionListBox.SelectedIndex].ItemId;
-            quantityTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].Quantity.ToString();
-            retailPriceTransactionTextBox.Text =
-                TransactionList[transactionListBox.SelectedIndex].RetailPrice.ToString("0.##");
-            dateTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].Date.ToShortDateString();
-
-            int itemPos = 0;
-            int custPos = 0;
-            foreach (Item item in ItemsList)
+            if (transactionListBox.SelectedIndex >= 0)
             {
-                if (TransactionList[transactionListBox.SelectedIndex].ItemId == item.ItemID)
+                ClearTransactionTextBoxes();
+                customerIDTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].CustId;
+                productsListBox.Text = TransactionList[transactionListBox.SelectedIndex].ItemId;
+                quantityTransactionTextBox.Text = TransactionList[transactionListBox.SelectedIndex].Quantity.ToString();
+                retailPriceTransactionTextBox.Text =
+                    TransactionList[transactionListBox.SelectedIndex].RetailPrice.ToString("0.##");
+                dateTransactionTextBox.Text =
+                    TransactionList[transactionListBox.SelectedIndex].Date.ToShortDateString();
+
+                int itemPos = 0;
+                int custPos = 0;
+                foreach (Item item in ItemsList)
                 {
-                    productsListBox.SelectedIndex = itemPos; 
+                    if (TransactionList[transactionListBox.SelectedIndex].ItemId == item.ItemID)
+                    {
+                        productsListBox.SelectedIndex = itemPos;
+                    }
+
+                    itemPos++;
                 }
 
-                itemPos++;
-            }
-
-            foreach (Customer customer in CustomerList)
-            {
-                if (TransactionList[transactionListBox.SelectedIndex].CustId == customer.CustomerId)
+                foreach (Customer customer in CustomerList)
                 {
-                    customerListBox.SelectedIndex = custPos;
-                }
+                    if (TransactionList[transactionListBox.SelectedIndex].CustId == customer.CustomerId)
+                    {
+                        customerListBox.SelectedIndex = custPos;
+                    }
 
-                custPos++;
+                    custPos++;
+                }
             }
+           
         }
 
         private void productsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClearItemTextBoxes();
-            productIDItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
-            descriptionItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].Description;
-            stockQuantityItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].StockQuantity.ToString();
-            retailPriceItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
-            if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Game))
+            if (productsListBox.SelectedIndex >= 0)
             {
-                Game game = (Game)ItemsList[productsListBox.SelectedIndex];
-                publisherGamesTextBox.Text = game.Publisher;
-                mediaTypeGamesTextBox.Text = game.MediaType;
-            }
+                ClearItemTextBoxes();
+                productIDItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
+                descriptionItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].Description;
+                stockQuantityItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].StockQuantity.ToString();
+                retailPriceItemInfoTextBox.Text = ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
+                if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Game))
+                {
+                    Game game = (Game)ItemsList[productsListBox.SelectedIndex];
+                    publisherGamesTextBox.Text = game.Publisher;
+                    mediaTypeGamesTextBox.Text = game.MediaType;
+                }
 
-            if(ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Platform))
-            {
-                Platform platform = (Platform)ItemsList[productsListBox.SelectedIndex];
-                modelNumberPlatformsTextBox.Text = platform.ModelNumber;
-            }
+                if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Platform))
+                {
+                    Platform platform = (Platform)ItemsList[productsListBox.SelectedIndex];
+                    modelNumberPlatformsTextBox.Text = platform.ModelNumber;
+                }
 
-            if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Accessory))
-            {
-                Accessory accessory = (Accessory)ItemsList[productsListBox.SelectedIndex];
-                platformTypeAccessoriesTextBox.Text = accessory.PlatformType;
-            }
+                if (ItemsList[productsListBox.SelectedIndex].GetType() == typeof(Accessory))
+                {
+                    Accessory accessory = (Accessory)ItemsList[productsListBox.SelectedIndex];
+                    platformTypeAccessoriesTextBox.Text = accessory.PlatformType;
+                }
 
-            productIDTransactionTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
-            retailPriceTransactionTextBox.Text = ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
+                productIDTransactionTextBox.Text = ItemsList[productsListBox.SelectedIndex].ItemID;
+                retailPriceTransactionTextBox.Text =
+                    ItemsList[productsListBox.SelectedIndex].RetailPrice.ToString("0.##");
+            }
         }
+
         #endregion
 
         #region Textbox Control
+
         /// <summary>
         /// Clears The Items Textboxes
         /// </summary>
@@ -363,6 +395,7 @@ namespace ViradaGames
             modelNumberPlatformsTextBox.Text = "";
             platformTypeAccessoriesTextBox.Text = "";
         }
+
         public void ClearCustomerTextBoxes()
         {
             CustomerIDCustomerTextBox.Text = "";
@@ -370,6 +403,7 @@ namespace ViradaGames
             firstNameCustomerTextBox.Text = "";
             emailCustomerTextBox.Text = "";
         }
+
         public void ClearTransactionTextBoxes()
         {
             customerIDTransactionTextBox.Text = "";
@@ -431,16 +465,16 @@ namespace ViradaGames
 
             foreach (Customer customer in CustomerList)
             {
-                customerListBox.Items.Add(string.Join(" ", customer.CustomerId, customer.FamilyName + " " + customer.Firstname));
+                customerListBox.Items.Add(string.Join(" ", customer.CustomerId,
+                    customer.FamilyName + " " + customer.Firstname));
             }
 
             foreach (Transaction transaction in TransactionList)
             {
-                transactionListBox.Items.Add(string.Join(" ", transaction.CustId.ToString(), transaction.Quantity.ToString(),
+                transactionListBox.Items.Add(string.Join(" ", transaction.CustId.ToString(),
+                    transaction.Quantity.ToString(),
                     transaction.RetailPrice.ToString(), transaction.Date.ToShortDateString()));
             }
-
-
         }
 
         /// <summary>
@@ -459,13 +493,14 @@ namespace ViradaGames
         {
             InitializeComponent();
         }
+
         private void dateTransactionTextBox_DoubleClick(object sender, EventArgs e)
         {
             // Sets the current Date
             currentDate = DateTime.Now;
             dateTransactionTextBox.Text = currentDate.Date.ToShortDateString();
         }
-        #endregion
 
+        #endregion
     }
 }

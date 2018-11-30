@@ -1,2 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ViradaGames.Game">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgACAAIAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViradaGames.Item">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAAoAAAAIAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViradaGames.Platform">
+    <Position X="10" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Platform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViradaGames.Transaction">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAoAAAAAAAAAAAAAKBIAACgQAAAAA=</HashCode>
+      <FileName>Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViradaGames.Accessory">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="ViradaGames.Item" FixedFromPoint="true">
+      <Path>
+        <Point X="8" Y="3.209" />
+        <Point X="8" Y="4.125" />
+        <Point X="5" Y="4.125" />
+        <Point X="5" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Accessory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViradaGames.Customer">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAAABAAAAAAAAEAAAAAAAAABACAAAAAgAAEAA=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
