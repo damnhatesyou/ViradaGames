@@ -15,18 +15,22 @@ namespace ViradaGames
 {
     public partial class ViradaGames : Form
     {
-        #region Lists
+        #region PublicVariables
 
         List<Item> ItemsList = new List<Item>();
         List<Customer> CustomerList = new List<Customer>();
         List<Transaction> TransactionList = new List<Transaction>();
+        DateTime currentDate = new DateTime();
 
         #endregion
 
-        DateTime currentDate = new DateTime();
-
         #region AddButtons
 
+        /// <summary>
+        /// Add a Item to the List and Item Collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void productAddButton_Click(object sender, EventArgs e)
         {
             // Does it Have Item Data
@@ -36,10 +40,10 @@ namespace ViradaGames
                 if (HasGame() && !(HasPlatforms() || HasAccessory()))
                 {
                     productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
-                        descriptionItemInfoTextBox.Text));
+                        descriptionItemInfoTextBox.Text)); // Add to Product Listbox
                     ItemsList.Add(new Game(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
-                        publisherGamesTextBox.Text, mediaTypeGamesTextBox.Text));
+                        publisherGamesTextBox.Text, mediaTypeGamesTextBox.Text)); // Add a Game To Item Collection 
                     return;
                 }
 
@@ -47,10 +51,10 @@ namespace ViradaGames
                 if (HasPlatforms() && !(HasGame() || HasAccessory()))
                 {
                     productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
-                        descriptionItemInfoTextBox.Text));
+                        descriptionItemInfoTextBox.Text)); // Add to Product Listbox
                     ItemsList.Add(new Platform(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
-                        modelNumberPlatformsTextBox.Text));
+                        modelNumberPlatformsTextBox.Text)); // Add a Platform To Item Collection
                     return;
                 }
 
@@ -58,10 +62,10 @@ namespace ViradaGames
                 if (HasAccessory() && !(HasGame() || HasPlatforms()))
                 {
                     productsListBox.Items.Add(string.Join(" ", productIDItemInfoTextBox.Text,
-                        descriptionItemInfoTextBox.Text));
+                        descriptionItemInfoTextBox.Text)); // Add to Product Listbox
                     ItemsList.Add(new Accessory(productIDItemInfoTextBox.Text, descriptionItemInfoTextBox.Text,
                         int.Parse(stockQuantityItemInfoTextBox.Text), double.Parse(retailPriceItemInfoTextBox.Text),
-                        platformTypeAccessoriesTextBox.Text));
+                        platformTypeAccessoriesTextBox.Text)); // Add an Accessory To Item Collection
                     return;
                 }
                 // Otherwise
@@ -70,44 +74,57 @@ namespace ViradaGames
                     MessageBox.Show("Please Enter a Games/Platform/Accessory");
                 }
 
-                ClearItemTextBoxes();
+                
             }
             else
             {
-                MessageBox.Show("Please The Some Data");
+                MessageBox.Show("Please enter an Item");
             }
+            ClearItemTextBoxes();
         }
-
+        
+        /// <summary>
+        /// Add a Customer to the List and Customer Collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void customerAddButton_Click(object sender, EventArgs e)
         {
+            // Does it have Customer Data
             if (HasCustomer())
             {
                 customerListBox.Items.Add(CustomerIDCustomerTextBox.Text + ": " + familyNameCustomerTextBox.Text +
                                           ", " +
-                                          firstNameCustomerTextBox.Text);
+                                          firstNameCustomerTextBox.Text); // Add to Customer Listbox
                 CustomerList.Add(new Customer(CustomerIDCustomerTextBox.Text, familyNameCustomerTextBox.Text,
-                    firstNameCustomerTextBox.Text, emailCustomerTextBox.Text));
+                    firstNameCustomerTextBox.Text, emailCustomerTextBox.Text)); // Add an Customer To Customer Collection
             }
             else
             {
-                customerListBox.Items.Add("C001" + ": " + "Unknown" + ", " + "Unknown");
-                CustomerList.Add(new Customer());
-                
+                customerListBox.Items.Add("C001" + ": " + "Unknown" + ", " + "Unknown"); // Adds a Default Customer to Listbox
+                CustomerList.Add(new Customer());// Add a Default Customer To Customer Collection
+
             }
 
             ClearCustomerTextBoxes();
         }
 
+        /// <summary>
+        /// Add a Transaction to the List and Transaction Collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void transactionAddButton_Click(object sender, EventArgs e)
         {
+            // Does it have Transaction Data
             if (HasTransaction())
             {
                 transactionListBox.Items.Add(string.Join(" ", customerIDTransactionTextBox.Text,
                     productIDTransactionTextBox.Text,
-                    quantityTransactionTextBox.Text, retailPriceTransactionTextBox.Text, dateTransactionTextBox.Text));
+                    quantityTransactionTextBox.Text, retailPriceTransactionTextBox.Text, dateTransactionTextBox.Text)); // Add to Transaction Listbox
                 TransactionList.Add(new Transaction(customerIDTransactionTextBox.Text, productIDTransactionTextBox.Text,
                     int.Parse(quantityTransactionTextBox.Text), double.Parse(retailPriceTransactionTextBox.Text),
-                    DateTime.Parse(dateTransactionTextBox.Text)));
+                    DateTime.Parse(dateTransactionTextBox.Text))); // Add an Transaction To Transaction Collection
             }
             else
             {
@@ -317,6 +334,11 @@ namespace ViradaGames
 
         #region Listbox Control
 
+        /// <summary>
+        /// Controls the behaviour of Customer ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void customerListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (customerListBox.SelectedIndex >= 0)
@@ -331,7 +353,12 @@ namespace ViradaGames
             }
 
         }
-
+        
+        /// <summary>
+        /// Controls the behaviour of Transaction ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void transactionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (transactionListBox.SelectedIndex >= 0)
@@ -370,6 +397,11 @@ namespace ViradaGames
            
         }
 
+        /// <summary>
+        /// Controls the behaviour of Products ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void productsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (productsListBox.SelectedIndex >= 0)
@@ -409,7 +441,7 @@ namespace ViradaGames
         #region Textbox Control
 
         /// <summary>
-        /// Clears The Items Textboxes
+        /// Clears the Items Textboxes
         /// </summary>
         public void ClearItemTextBoxes()
         {
@@ -423,6 +455,9 @@ namespace ViradaGames
             platformTypeAccessoriesTextBox.Text = "";
         }
 
+        /// <summary>
+        /// Clears the Customer Textboxes
+        /// </summary>
         public void ClearCustomerTextBoxes()
         {
             CustomerIDCustomerTextBox.Text = "";
@@ -430,7 +465,10 @@ namespace ViradaGames
             firstNameCustomerTextBox.Text = "";
             emailCustomerTextBox.Text = "";
         }
-
+        
+        /// <summary>
+        /// Clears the Transaction Textboxes
+        /// </summary>
         public void ClearTransactionTextBoxes()
         {
             customerIDTransactionTextBox.Text = "";
@@ -470,6 +508,18 @@ namespace ViradaGames
             ClearTransactionTextBoxes();
         }
 
+        /// <summary>
+        /// Populates Transaction date textbox with Today's Date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateTransactionTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            // Sets the current Date
+            currentDate = DateTime.Now;
+            dateTransactionTextBox.Text = currentDate.Date.ToShortDateString();
+        }
+
         #endregion
 
         #region Misc 
@@ -498,9 +548,8 @@ namespace ViradaGames
 
             foreach (Transaction transaction in TransactionList)
             {
-                transactionListBox.Items.Add(string.Join(" ", transaction.CustId.ToString(),
-                    transaction.Quantity.ToString(),
-                    transaction.RetailPrice.ToString(), transaction.Date.ToShortDateString()));
+                transactionListBox.Items.Add(string.Join(" ", transaction.CustId, transaction.ItemId, transaction.Quantity.ToString() + " x " +
+                    transaction.RetailPrice.ToString("0.##"), transaction.Date.ToShortDateString()));
             }
         }
 
@@ -519,13 +568,6 @@ namespace ViradaGames
         public ViradaGames()
         {
             InitializeComponent();
-        }
-
-        private void dateTransactionTextBox_DoubleClick(object sender, EventArgs e)
-        {
-            // Sets the current Date
-            currentDate = DateTime.Now;
-            dateTransactionTextBox.Text = currentDate.Date.ToShortDateString();
         }
 
         #endregion

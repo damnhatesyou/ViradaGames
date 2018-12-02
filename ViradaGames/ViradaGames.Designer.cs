@@ -120,6 +120,7 @@ namespace ViradaGames
             this.retailPriceItemInfoTextBox.Name = "retailPriceItemInfoTextBox";
             this.retailPriceItemInfoTextBox.Size = new System.Drawing.Size(158, 35);
             this.retailPriceItemInfoTextBox.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.retailPriceItemInfoTextBox, "Enter Retail Price");
             // 
             // stockQuantityItemInfoTextBox
             // 
@@ -128,6 +129,7 @@ namespace ViradaGames
             this.stockQuantityItemInfoTextBox.Name = "stockQuantityItemInfoTextBox";
             this.stockQuantityItemInfoTextBox.Size = new System.Drawing.Size(158, 35);
             this.stockQuantityItemInfoTextBox.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.stockQuantityItemInfoTextBox, "Enter Stock On Hand");
             // 
             // descriptionItemInfoTextBox
             // 
@@ -212,6 +214,7 @@ namespace ViradaGames
             this.mediaTypeGamesTextBox.Name = "mediaTypeGamesTextBox";
             this.mediaTypeGamesTextBox.Size = new System.Drawing.Size(158, 35);
             this.mediaTypeGamesTextBox.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.mediaTypeGamesTextBox, "Enter Media Type");
             // 
             // publisherGamesTextBox
             // 
@@ -220,6 +223,7 @@ namespace ViradaGames
             this.publisherGamesTextBox.Name = "publisherGamesTextBox";
             this.publisherGamesTextBox.Size = new System.Drawing.Size(158, 35);
             this.publisherGamesTextBox.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.publisherGamesTextBox, "Enter Publisher");
             // 
             // mediaTypeGamesLabel
             // 
@@ -261,6 +265,7 @@ namespace ViradaGames
             this.modelNumberPlatformsTextBox.Name = "modelNumberPlatformsTextBox";
             this.modelNumberPlatformsTextBox.Size = new System.Drawing.Size(158, 35);
             this.modelNumberPlatformsTextBox.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.modelNumberPlatformsTextBox, "Enter Model Number");
             // 
             // modelNumberPlatformsLabel
             // 
@@ -292,6 +297,7 @@ namespace ViradaGames
             this.platformTypeAccessoriesTextBox.Name = "platformTypeAccessoriesTextBox";
             this.platformTypeAccessoriesTextBox.Size = new System.Drawing.Size(158, 35);
             this.platformTypeAccessoriesTextBox.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.platformTypeAccessoriesTextBox, "Enter Platform Type");
             // 
             // platformTypeAccessoriesLabel
             // 
@@ -329,6 +335,7 @@ namespace ViradaGames
             this.emailCustomerTextBox.Name = "emailCustomerTextBox";
             this.emailCustomerTextBox.Size = new System.Drawing.Size(158, 35);
             this.emailCustomerTextBox.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.emailCustomerTextBox, "Enter Email Address");
             // 
             // customerIDCustomerLabel
             // 
@@ -347,6 +354,7 @@ namespace ViradaGames
             this.firstNameCustomerTextBox.Name = "firstNameCustomerTextBox";
             this.firstNameCustomerTextBox.Size = new System.Drawing.Size(158, 35);
             this.firstNameCustomerTextBox.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.firstNameCustomerTextBox, "Enter First Name");
             // 
             // familyNameCustomerLabel
             // 
@@ -365,6 +373,7 @@ namespace ViradaGames
             this.familyNameCustomerTextBox.Name = "familyNameCustomerTextBox";
             this.familyNameCustomerTextBox.Size = new System.Drawing.Size(158, 35);
             this.familyNameCustomerTextBox.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.familyNameCustomerTextBox, "Enter Family Name");
             // 
             // firstNameCustomerLabel
             // 
@@ -384,6 +393,7 @@ namespace ViradaGames
             this.CustomerIDCustomerTextBox.Name = "CustomerIDCustomerTextBox";
             this.CustomerIDCustomerTextBox.Size = new System.Drawing.Size(158, 35);
             this.CustomerIDCustomerTextBox.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.CustomerIDCustomerTextBox, "Enter Customers ID\r\nDouble Click To Clear Customer Info");
             this.CustomerIDCustomerTextBox.DoubleClick += new System.EventHandler(this.CustomerIDCustomerTextBox_DoubleClick);
             // 
             // emailCustomerLabel
@@ -409,7 +419,7 @@ namespace ViradaGames
             this.transactionsInfoGroupBox.Controls.Add(this.quantityTransactionTextBox);
             this.transactionsInfoGroupBox.Controls.Add(this.customerIDTransactionTextBox);
             this.transactionsInfoGroupBox.Controls.Add(this.quantityTransactionsLabel);
-            this.transactionsInfoGroupBox.Location = new System.Drawing.Point(966, 642);
+            this.transactionsInfoGroupBox.Location = new System.Drawing.Point(966, 656);
             this.transactionsInfoGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.transactionsInfoGroupBox.Name = "transactionsInfoGroupBox";
             this.transactionsInfoGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -427,6 +437,7 @@ namespace ViradaGames
             this.retailPriceTransactionTextBox.ReadOnly = true;
             this.retailPriceTransactionTextBox.Size = new System.Drawing.Size(158, 35);
             this.retailPriceTransactionTextBox.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.retailPriceTransactionTextBox, "This is read-only");
             // 
             // productIDTransactionTextBox
             // 
@@ -437,6 +448,7 @@ namespace ViradaGames
             this.productIDTransactionTextBox.ReadOnly = true;
             this.productIDTransactionTextBox.Size = new System.Drawing.Size(158, 35);
             this.productIDTransactionTextBox.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.productIDTransactionTextBox, "This is read-only");
             // 
             // retailPriceTransactionsLabel
             // 
@@ -456,6 +468,7 @@ namespace ViradaGames
             this.dateTransactionTextBox.Name = "dateTransactionTextBox";
             this.dateTransactionTextBox.Size = new System.Drawing.Size(158, 35);
             this.dateTransactionTextBox.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.dateTransactionTextBox, "Enter a date DD/MM/YYYY\r\nDouble click to autofill todays date");
             this.dateTransactionTextBox.DoubleClick += new System.EventHandler(this.dateTransactionTextBox_DoubleClick);
             // 
             // productIDTransactionsLabel
@@ -496,6 +509,7 @@ namespace ViradaGames
             this.quantityTransactionTextBox.Name = "quantityTransactionTextBox";
             this.quantityTransactionTextBox.Size = new System.Drawing.Size(158, 35);
             this.quantityTransactionTextBox.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.quantityTransactionTextBox, "Enter a Quantity");
             // 
             // customerIDTransactionTextBox
             // 
@@ -506,6 +520,7 @@ namespace ViradaGames
             this.customerIDTransactionTextBox.ReadOnly = true;
             this.customerIDTransactionTextBox.Size = new System.Drawing.Size(158, 35);
             this.customerIDTransactionTextBox.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.customerIDTransactionTextBox, "This is read-only");
             this.customerIDTransactionTextBox.DoubleClick += new System.EventHandler(this.customerIDTransactionTextBox_DoubleClick);
             // 
             // quantityTransactionsLabel
@@ -549,6 +564,7 @@ namespace ViradaGames
             this.productsListBox.Name = "productsListBox";
             this.productsListBox.Size = new System.Drawing.Size(403, 903);
             this.productsListBox.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.productsListBox, "Select a Product");
             this.productsListBox.SelectedIndexChanged += new System.EventHandler(this.productsListBox_SelectedIndexChanged);
             // 
             // customerLabel
@@ -566,7 +582,7 @@ namespace ViradaGames
             // 
             this.transactionsLabel.AutoSize = true;
             this.transactionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transactionsLabel.Location = new System.Drawing.Point(1048, 578);
+            this.transactionsLabel.Location = new System.Drawing.Point(1048, 582);
             this.transactionsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.transactionsLabel.Name = "transactionsLabel";
             this.transactionsLabel.Size = new System.Drawing.Size(198, 36);
@@ -578,7 +594,7 @@ namespace ViradaGames
             this.customerAddButton.Location = new System.Drawing.Point(1435, 27);
             this.customerAddButton.Margin = new System.Windows.Forms.Padding(2);
             this.customerAddButton.Name = "customerAddButton";
-            this.customerAddButton.Size = new System.Drawing.Size(399, 62);
+            this.customerAddButton.Size = new System.Drawing.Size(403, 62);
             this.customerAddButton.TabIndex = 7;
             this.customerAddButton.Text = "ADD";
             this.customerAddButton.UseVisualStyleBackColor = true;
@@ -586,10 +602,10 @@ namespace ViradaGames
             // 
             // transactionAddButton
             // 
-            this.transactionAddButton.Location = new System.Drawing.Point(1435, 564);
+            this.transactionAddButton.Location = new System.Drawing.Point(1435, 571);
             this.transactionAddButton.Margin = new System.Windows.Forms.Padding(2);
             this.transactionAddButton.Name = "transactionAddButton";
-            this.transactionAddButton.Size = new System.Drawing.Size(399, 62);
+            this.transactionAddButton.Size = new System.Drawing.Size(403, 62);
             this.transactionAddButton.TabIndex = 8;
             this.transactionAddButton.Text = "ADD";
             this.transactionAddButton.UseVisualStyleBackColor = true;
@@ -604,21 +620,24 @@ namespace ViradaGames
             this.customerListBox.Name = "customerListBox";
             this.customerListBox.Size = new System.Drawing.Size(403, 410);
             this.customerListBox.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.customerListBox, "Select a Customer");
             this.customerListBox.SelectedIndexChanged += new System.EventHandler(this.customerListBox_SelectedIndexChanged);
             // 
             // transactionListBox
             // 
             this.transactionListBox.FormattingEnabled = true;
             this.transactionListBox.ItemHeight = 29;
-            this.transactionListBox.Location = new System.Drawing.Point(1435, 642);
+            this.transactionListBox.Location = new System.Drawing.Point(1435, 656);
             this.transactionListBox.Margin = new System.Windows.Forms.Padding(2);
             this.transactionListBox.Name = "transactionListBox";
             this.transactionListBox.Size = new System.Drawing.Size(403, 410);
             this.transactionListBox.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.transactionListBox, "Select a Transaction");
             this.transactionListBox.SelectedIndexChanged += new System.EventHandler(this.transactionListBox_SelectedIndexChanged);
             // 
             // toolTip1
             // 
+            this.toolTip1.AutomaticDelay = 200;
             this.toolTip1.ShowAlways = true;
             // 
             // ViradaGames
