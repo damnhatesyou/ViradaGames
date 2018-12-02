@@ -90,8 +90,9 @@ namespace ViradaGames
             }
             else
             {
-                CustomerList.Add(new Customer());
                 customerListBox.Items.Add("C001" + ": " + "Unknown" + ", " + "Unknown");
+                CustomerList.Add(new Customer());
+                
             }
 
             ClearCustomerTextBoxes();
@@ -203,7 +204,7 @@ namespace ViradaGames
             }
             catch (IOException oe)
             {
-                MessageBox.Show("Could not write to file !\n" + oe.Message);
+                MessageBox.Show("Could not write to items.dat " + oe.Message);
             }
         }
 
@@ -212,12 +213,21 @@ namespace ViradaGames
         /// </summary>
         public void ReadItemList()
         {
-            using (Stream readStream = File.Open("items.dat", FileMode.Open))
+            try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                using (Stream readStream = File.Open("items.dat", FileMode.Open))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
 
-                ItemsList = (List<Item>) formatter.Deserialize(readStream);
+                    ItemsList = (List<Item>)formatter.Deserialize(readStream);
+                }
             }
+            catch (IOException oe)
+            {
+                Console.WriteLine("Could not read item.dat " + oe);
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -236,7 +246,7 @@ namespace ViradaGames
             }
             catch (IOException oe)
             {
-                MessageBox.Show("Could not write to file !\n" + oe.Message);
+                MessageBox.Show("Could not write to customer.dat " + oe.Message);
             }
         }
 
@@ -245,11 +255,19 @@ namespace ViradaGames
         /// </summary>
         public void ReadCustomerList()
         {
-            using (Stream readStream = File.Open("customer.dat", FileMode.Open))
+            try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                using (Stream readStream = File.Open("customer.dat", FileMode.Open))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
 
-                CustomerList = (List<Customer>) formatter.Deserialize(readStream);
+                    CustomerList = (List<Customer>)formatter.Deserialize(readStream);
+                }
+            }
+            catch (IOException oe)
+            {
+                Console.WriteLine("Could not read customer.dat " + oe);
+                throw;
             }
         }
 
@@ -269,7 +287,7 @@ namespace ViradaGames
             }
             catch (IOException oe)
             {
-                MessageBox.Show("Could not write to file !\n" + oe.Message);
+                MessageBox.Show("Could not write to transaction.dat " + oe.Message);
             }
         }
 
@@ -278,12 +296,21 @@ namespace ViradaGames
         /// </summary>
         public void ReadTransactionList()
         {
-            using (Stream readStream = File.Open("transaction.dat", FileMode.Open))
+            try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                using (Stream readStream = File.Open("transaction.dat", FileMode.Open))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
 
-                TransactionList = (List<Transaction>) formatter.Deserialize(readStream);
+                    TransactionList = (List<Transaction>)formatter.Deserialize(readStream);
+                }
             }
+            catch (IOException oe)
+            {
+                Console.WriteLine("Could not read transaction.dat " + oe);
+                throw;
+            }
+
         }
 
         #endregion

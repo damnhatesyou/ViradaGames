@@ -22,3 +22,9 @@ C:\Users\Daimyo-Laptop\Projects\ViradaGames\ViradaGames\obj\Debug\ViradaGames.ex
 C:\Users\Daimyo-Laptop\Projects\ViradaGames\ViradaGames\obj\Debug\ViradaGames.application
 C:\Users\Daimyo-Laptop\Projects\ViradaGames\ViradaGames\obj\Debug\ViradaGames.exe
 C:\Users\Daimyo-Laptop\Projects\ViradaGames\ViradaGames\obj\Debug\ViradaGames.pdb
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.csprojAssemblyReference.cache
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.ViradaGames.resources
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.Properties.Resources.resources
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.csproj.GenerateResource.cache
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.exe
+C:\Users\Damien Bafile\Documents\GitHub\ViradaGames\ViradaGames\obj\Debug\ViradaGames.pdb
